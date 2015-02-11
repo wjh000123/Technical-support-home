@@ -1,0 +1,334 @@
+<?php
+
+class Cases extends CI_Controller
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->helper('date');
+		$this->load->model('cases_model');
+	}
+
+	public function index()
+	{
+		/*
+		if($year > 2000 & $year < 9999)
+		{
+			$cases = $this->cases_model->get_cases();
+			$outputStr = '';
+			$time = 0;
+			for($mon = 1; $mon <= 12; $mon++)
+			{
+				$time = strtotime($year.'-'.$mon.'-1')*1000;
+				$caseAmount = 0;
+				foreach($cases as $case)
+				{
+					if(date('n', strtotime($case['ReportDate']))==$mon)
+					{
+						$caseAmount = $case['Amount'];
+						break;
+					}
+				}
+				$outputStr.=$time.','.$caseAmount.';';
+			}
+		}
+
+		$data['caseData'] = $outputStr;
+		$data['cases'] = $this->cases_model->get_cases();*/
+		$data['title'] = 'Cases';
+		$this->load->view('templates/header', $data);
+		$this->load->view('cases/index', $data);
+		$this->load->view('templates/footer', $data);
+	}
+
+	public function test()
+	{
+		/*
+		if($year > 2000 & $year < 9999)
+		{
+			$cases = $this->cases_model->get_cases();
+			$outputStr = '';
+			$time = 0;
+			for($mon = 1; $mon <= 12; $mon++)
+			{
+				$time = strtotime($year.'-'.$mon.'-1')*1000;
+				$caseAmount = 0;
+				foreach($cases as $case)
+				{
+					if(date('n', strtotime($case['ReportDate']))==$mon)
+					{
+						$caseAmount = $case['Amount'];
+						break;
+					}
+				}
+				$outputStr.=$time.','.$caseAmount.';';
+			}
+		}
+
+		$data['caseData'] = $outputStr;
+		$data['cases'] = $this->cases_model->get_cases();*/
+		$data['title'] = 'Cases';
+		$this->load->view('templates/header', $data);
+		$this->load->view('cases/index', $data);
+	}
+
+	public function manage()
+	{
+		$year = 2013;
+		$month = 7;
+		$data['title'] = 'Cases';
+		$data['test'] = strtotime('2013-04-01');
+		$this->load->view('templates/header', $data);
+		$this->load->view('cases/manage', $data);
+		$this->load->view('templates/footer', $data);
+	}
+
+	public function salesforce()
+	{
+		$data['title'] = 'Cases';
+		$this->load->view('templates/header', $data);
+		$this->load->view('cases/salesforce', $data);
+		$this->load->view('templates/footer', $data);
+	}
+
+	public function viewByYear($year)
+	{
+		$reArray = array();
+		
+		if($year > 2000 & $year < 9999)
+		{
+			$cases = $this->cases_model->getMonthlyCases();
+			for ($mon=1; $mon <=12 ; $mon++)
+			{
+				$time = strtotime($year.'-'.$mon.'-1')*1000;
+				$caseAmount = 0.0;
+				foreach($cases as $case)
+				{
+					if(date('n', strtotime($case['ReportDate']))==$mon)
+					{
+						$caseAmount = (int)$case['Amount'];
+						break;
+					}
+				}
+				array_push($reArray, array($time, $caseAmount));
+			}
+		}
+
+		echo json_encode($reArray);
+	}
+
+	public function viewSystemUnit($year, $month)
+	{
+		$date = $year.'-'.$month.'-1';
+		$reArray = array();
+		
+		if($year > 2000 & $year < 9999)
+		{
+			$results = $this->cases_model->getCaseSystemUnit($date);
+			foreach($results as $result)
+			{
+				array_push($reArray, array($result['SystemUnitName'], (int)$result['Amount']));
+			}
+		}
+
+		echo json_encode($reArray);
+	}
+
+	public function viewFunctionUnit($year, $month)
+	{
+		$date = $year.'-'.$month.'-1';
+		$reArray = array();
+		
+		if($year > 2000 & $year < 9999)
+		{
+			$results = $this->cases_model->getCaseFunctionUnit($date);
+			foreach($results as $result)
+			{
+				array_push($reArray, array($result['SystemUnitName'], $result['FunctionUnit'], (int)$result['Amount']));
+			}
+		}
+
+		echo json_encode($reArray);
+	}
+
+	public function viewCaseType($year, $month)
+	{
+		$date = $year.'-'.$month.'-1';
+		$reArray = array();
+
+		if($year > 2000 && $year < 9999)
+		{
+			$results = $this->cases_model->getCaseType($date);
+			foreach($results as $result)
+			{
+				array_push($reArray, array($result['CaseTypeName'], (int)$result['Amount']));
+			}
+		}
+		echo json_encode($reArray);
+	}
+
+	public function viewCaseOverview($year, $month)
+	{
+		$date = $year.'-'.$month.'-1';
+		$reArray = array();
+
+		if($year > 2000 && $year < 9999)
+		{
+			$results = $this->cases_model->getCaseOverview($date);
+			foreach($results as $result)
+			{
+				array_push($reArray, array($result['SystemUnitName'], $result['FunctionUnit'], $result['CaseTypeName'], (int)$result['Amount']));
+			}
+		}
+		echo json_encode($reArray);
+	}
+
+	public function viewSFCaseOverview($year, $month)
+	{
+		$sfRootUrl = 'https://ap1.salesforce.com/';
+		$date = $year.'-'.$month.'-1';
+		$reArray = array();
+
+		if($year > 2000 && $year < 9999)
+		{
+			$results = $this->cases_model->getSFCaseOverview($date);
+			foreach($results as $result)
+			{
+				if($result['Status']=='Closed')
+					$spanStyle = 'label-success';
+				else
+					$spanStyle = 'label-important';
+				array_push($reArray, array('<a class = "data" href="'.$sfRootUrl.$result['SalesforceId'].'" target = "_blank"><i class="icon icon-darkgray icon-carat-1-e"></i>'.$result['CaseNumber'].'</a>', $result['CreatedBy'], date("Y-m-d H:i:s", strtotime($result['CreatedDate'].' UTC')), $result['Owner'], '<span class="label '.$spanStyle.'">'.$result['Status'].'</span>'));
+			}
+		}
+		echo json_encode($reArray);
+	}
+
+	public function viewSFCaseAmountOverview()
+	{
+		$reArray = array();
+		$interval = 86400;	//24*3600 means 1 day for timestamp
+		$i=0;
+
+		$results = $this->cases_model->getSFCaseAmountOverview();
+		foreach($results as $result)
+		{
+			if($i>=count($results)-1)
+				break;
+
+			$currentStamp = strtotime($result['Date']);
+			$nextStamp = strtotime($results[($i+1)]['Date']);
+
+				while (($nextStamp-$currentStamp)!=$interval) {
+					array_push($reArray, array($currentStamp*1000, 0));
+					$currentStamp+=$interval;
+				}
+				array_push($reArray, array($currentStamp*1000, (int)$result['Amount']));
+
+			$i++;
+		}
+
+		echo json_encode($reArray);
+	}
+
+	public function getCaseFilter()
+	{
+		$reArray = array();
+		$tempArray = array();
+		$results = $this->cases_model->getCaseTypeFilter();
+		foreach($results as $result)
+		{
+			$tempArray[$result['CaseTypeId']] = $result['CaseTypeName'];
+		}
+		$reArray['CaseType'] = $tempArray;
+
+		$tempArray = array();
+		$results = $this->cases_model->getFunctionUnitFilter();
+		foreach($results as $result)
+		{
+			$tempArray[$result['FunctionUnitId']] = array($result['FunctionUnit'], $result['SystemUnitName']);
+			//array_push($tempArray, array($result['FunctionUnit'], $result['SystemUnitName']));
+		}
+		$reArray['FunctionUnit'] = $tempArray;
+
+		$tempArray = array();
+		$results = $this->cases_model->getSystemUnitFilter();
+		foreach($results as $result)
+		{
+			$tempArray[$result['SystemUnitId']] = $result['SystemUnitName'];
+			//array_push($tempArray, $result['SystemUnitName']);
+		}
+		$reArray['SystemUnit'] = $tempArray;
+
+		echo (json_encode($reArray));
+	}
+
+	public function getTotalAmount()
+	{
+		$reStr = array();
+
+		$result = $this->cases_model->getTotalCaseAmount();
+		array_push($reStr, $result[0]['Amount']);
+
+		$result = $this->cases_model->getLastSyncSalesforceCaseDate();
+		array_push($reStr, date("Y-m-d H:i:s", strtotime($result[0]['SyncDate'].' UTC')));
+
+		$result = $this->cases_model->getOpenCaseAmount();
+		array_push($reStr, $result[0]['Amount']);
+
+		echo json_encode($reStr);
+	}
+
+	public function AddCaseReport($caseDate, $caseTypeId, $functionUnitId, $amount)
+	{
+		$result = $this->cases_model->upsertCaseReport(mdate('%Y-%m-01', strtotime($caseDate)), $caseTypeId, $functionUnitId, $amount);
+		if($result)
+			echo 1;
+		else
+			echo 0;
+	}
+
+	public function SyncCaseFromSalesforce($year, $month)
+	{
+		if($year>2000&&$year<9999&&$month>0&&$month<13)
+		{
+			$sfCase = array();
+			$ownerQuery = '';
+
+			define("USERNAME", "lee.wangjh@ef.com");
+			define("PASSWORD", "mland123");
+			define("SECURITY_TOKEN", "V9yKjIN9tBIs4oDlZ37Z56pDz");
+			require_once (APPPATH.'soapclient/SforceEnterpriseClient.php');
+			$mySforceConnection = new SforceEnterpriseClient();
+			$mySforceConnection->createConnection(APPPATH."soapclient/enterprise.wsdl.xml");
+			$mySforceConnection->login(USERNAME, PASSWORD.SECURITY_TOKEN);
+
+			$results = $this->cases_model->getMemberinfo();
+			foreach($results as $result)
+			{
+				if($ownerQuery=='')
+				{
+					$ownerQuery.='(';
+					$ownerQuery.="OwnerId = '".$result['SalesforceId']."'";
+				}
+				else
+					$ownerQuery.="OR OwnerId = '".$result['SalesforceId']."'";
+			}
+			$ownerQuery.=')';
+			
+			$startDate = mdate('%Y-%m-%dT%H:%i:%sZ', local_to_gmt(strtotime($year.'-'.$month,'-01')));
+			$endDate = mdate('%Y-%m-%dT%H:%i:%sZ', local_to_gmt(strtotime($year.'-'.($month+1),'-01')));
+			$query = "SELECT Id, CaseNumber, Status, Owner.Name, CreatedDate, CreatedBy.Name, ClosedDate from Case where $ownerQuery and CreatedDate >= $startDate and CreatedDate < $endDate order by CaseNumber";
+			$response = $mySforceConnection->query($query);
+			foreach ($response->records as $record) {
+				//for close date may be null, there is hard code, like add "'" for this field
+				array_push($sfCase, array($record->Id, $record->CaseNumber, property_exists($record, 'Status')?$record->Status:'NULL', property_exists($record, 'Owner')?$record->Owner->Name:'NULL', property_exists($record, 'CreatedBy')?$record->CreatedBy->Name:'NULL', property_exists($record, 'CreatedDate')?$record->CreatedDate:'NULL', property_exists($record, 'ClosedDate')?'\''.$record->ClosedDate.'\'':'NULL'));
+		    }
+		    $result = 1;
+		    if(count($sfCase)>0)
+				$result = $this->cases_model->importCaseFromSF($sfCase, $startDate, $endDate);
+			
+			echo $result;
+		}
+	}
+}

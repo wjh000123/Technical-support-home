@@ -1,0 +1,139 @@
+<?php
+class Cases_model extends CI_Model {
+
+	public function __construct()
+	{
+		$this->load->database();
+	}
+
+	public function getMonthlyCases()
+	{	
+		$query = $this->db->get('CaseReportByAmount');
+		return $query->result_array();
+	}
+
+	public function getCaseSystemUnit($date)
+	{
+		$sql = "CALL SystemUnitByMonth('$date')";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getCaseFunctionUnit($date)
+	{
+		$sql = "CALL FunctionUnitByMonth('$date')";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getCaseType($date)
+	{
+		$sql = "CALL CaseTypeByMonth('$date')";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getCaseOverview($date)
+	{
+		$sql = "CALL OverviewByMonth('$date')";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getSFCaseOverview($date)
+	{
+		$sql = "SELECT SalesforceId, CaseNumber, CreatedBy, CreatedDate, Owner, Status FROM Cases WHERE YEAR('$date') = YEAR(CONVERT_TZ(CreatedDate, '+0:00', '+".TIMEZONEOFFSET.":00')) AND Month('$date') = MONTH(CONVERT_TZ(CreatedDate, '+0:00', '+".TIMEZONEOFFSET.":00')) ORDER BY CASE WHEN STATUS = 'closed' THEN 3 WHEN STATUS = 'new' THEN 1 ELSE 2 END, CaseNumber DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getSFCaseAmountOverview()
+	{
+		$sql = "SELECT count(1) AS Amount,DATE(CONVERT_TZ(CreatedDate, '+0:00', '+".TIMEZONEOFFSET.":00')) AS Date FROM Cases GROUP BY DATE(CONVERT_TZ(CreatedDate, '+0:00', '+".TIMEZONEOFFSET.":00'))";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getCaseTypeFilter()
+	{
+		$sql = "select * from ViewCaseType";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getFunctionUnitFilter()
+	{
+		$sql = "select * from ViewFunctionUnit";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getSystemUnitFilter()
+	{
+		$sql = "select * from ViewSystemUnit";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function upsertCaseReport($caseDate, $caseTypeId, $functionUnitId, $amount)
+	{
+		$sql = "CALL UpsertCaseReport('$caseDate', $caseTypeId, $functionUnitId, $amount)";
+		$query = $this->db->query($sql);
+		return $query;
+	}
+
+	public function getTotalCaseAmount()
+	{
+		$sql = "SELECT Count(1) AS Amount FROM Cases;";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getLastSyncSalesforceCaseDate()
+	{
+		$sql = "SELECT ConfigurationValue AS SyncDate FROM Configuration where ConfigurationId = 1;";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getOpenCaseAmount()
+	{
+		$sql = "SELECT Count(1) AS Amount FROM Cases WHERE (Status!='Closed' or Status IS NULL);";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getMemberAlias()
+	{
+		$sql = "SELECT Alias FROM Members";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function getMemberinfo()
+	{
+		$sql = "SELECT * FROM Members";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function importCaseFromSF($array, $startDate, $endDate)
+	{
+		$values = '';
+		$newData;
+		$oldData;
+		foreach ($array as $a) {
+			//since $a[4] means the close date, and this field may be empty, different logic(hard code) for this field here.
+			if($values=='')
+				$values.="(NULL, '".$a[0]."', '".$a[1]."', '".$a[2]."', '".$a[3]."', NULL, NULL, '".$a[4]."', '".$a[5]."', ".$a[6].", NULL, NULL, '".gmdate("Y-m-d H:i:s")."', 'ImportFromSF', '".gmdate("Y-m-d H:i:s")."', 'ImportFromSF', 0)";
+			else
+				$values.=", (NULL, '".$a[0]."', '".$a[1]."', '".$a[2]."', '".$a[3]."', NULL, NULL, '".$a[4]."', '".$a[5]."', ".$a[6].", NULL, NULL, '".gmdate("Y-m-d H:i:s")."', 'ImportFromSF', '".gmdate("Y-m-d H:i:s")."', 'ImportFromSF', 0)";
+		}
+
+		$sql = "INSERT INTO Cases VALUES ".$values." ON DUPLICATE KEY UPDATE Owner = VALUES(Owner), CaseNumber = VALUES(CaseNumber), Status = VALUES(Status), CreatedDate = VALUES(CreatedDate), CreatedBy = VALUES(CreatedBy), ClosedDate = VALUES(ClosedDate), UpdateDate = VALUES(UpdateDate), UpdateBy = VALUES(UpdateBy);"; 
+		$query = $this->db->query($sql);
+		$sql = "UPDATE Configuration SET ConfigurationValue = '".gmdate("Y-m-d H:i:s")."' WHERE ConfigurationId = 1";
+		$query = $this->db->query($sql);
+		return $query;
+	}
+}

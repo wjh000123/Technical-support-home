@@ -1,0 +1,1194 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"res",
+				"response"
+			],
+			[
+				"caset",
+				"caseType"
+			],
+			[
+				"datat",
+				"dataType"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"even",
+				"eventId"
+			],
+			[
+				"return",
+				"returnStr"
+			],
+			[
+				"panel",
+				"panelInfo"
+			],
+			[
+				"max",
+				"max-height"
+			],
+			[
+				"event",
+				"eventInfo"
+			],
+			[
+				"moni",
+				"monitoring_model"
+			],
+			[
+				"monitorin",
+				"monitoring_model"
+			],
+			[
+				"row",
+				"num_rows"
+			],
+			[
+				"del",
+				"deleteBtn"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"time",
+				"timestamp"
+			],
+			[
+				"total",
+				"totalCaseAmount"
+			],
+			[
+				"seri",
+				"series"
+			],
+			[
+				"tool",
+				"tooltip"
+			],
+			[
+				"week",
+				"weeklyAmount"
+			],
+			[
+				"wee",
+				"weekNum"
+			],
+			[
+				"ser",
+				"series"
+			],
+			[
+				"toolt",
+				"tooltipStr"
+			],
+			[
+				"se",
+				"series"
+			],
+			[
+				"array_key",
+				"array_key_exists"
+			],
+			[
+				"systeu",
+				"systemUnitCountArray"
+			],
+			[
+				"systemunit",
+				"systemUnitCountArray"
+			],
+			[
+				"Systemu",
+				"SystemUnitName"
+			],
+			[
+				"var",
+				"var_dump"
+			],
+			[
+				"notyt",
+				"notyType"
+			],
+			[
+				"tr",
+				"true"
+			],
+			[
+				"odbc_fe",
+				"odbc_fetch_row"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"va",
+				"val"
+			],
+			[
+				"mon",
+				"month"
+			],
+			[
+				"fet",
+				"fetchEmergencyCase"
+			],
+			[
+				"emerge",
+				"emergencyCalendar"
+			],
+			[
+				"emergen",
+				"emergencyCalendar"
+			],
+			[
+				"case",
+				"caseInfo"
+			],
+			[
+				"render",
+				"renderRating"
+			],
+			[
+				"remove",
+				"removeClass"
+			],
+			[
+				"date",
+				"datepickerClicked"
+			],
+			[
+				"stop",
+				"stopPropagation"
+			],
+			[
+				"preve",
+				"preventDefault"
+			],
+			[
+				"emergencys",
+				"emergencySubject"
+			],
+			[
+				"last",
+				"lastUpdatedEvent"
+			],
+			[
+				"acti",
+				"actionType"
+			],
+			[
+				"timeo",
+				"timeoutEvent"
+			],
+			[
+				"emergencystart",
+				"emergencyStartTime"
+			],
+			[
+				"first",
+				"first-child"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"selected",
+				"selectedDate"
+			],
+			[
+				"index",
+				"indexOf"
+			],
+			[
+				"tabl",
+				"tableContainer"
+			],
+			[
+				"function",
+				"FunctionUnitId"
+			],
+			[
+				"FunctionUnit",
+				"FunctionUnit_lkp"
+			],
+			[
+				"click",
+				"clickedPoint"
+			],
+			[
+				"getcase",
+				"getCaseTypeFromSubFunctionUnit"
+			],
+			[
+				"det",
+				"detailRow"
+			],
+			[
+				"ro",
+				"rowSpan"
+			],
+			[
+				"size",
+				"sizeAdjustList"
+			],
+			[
+				"reque",
+				"requestURL"
+			],
+			[
+				"subf",
+				"subFunctionUnitId"
+			],
+			[
+				"app",
+				"append"
+			],
+			[
+				"insert",
+				"mysql_insert_id"
+			],
+			[
+				"system",
+				"systemUnit"
+			],
+			[
+				"data-sys",
+				"data-systemUnit"
+			],
+			[
+				"newva",
+				"NewValue"
+			],
+			[
+				"newv",
+				"NewValue"
+			],
+			[
+				"getdata",
+				"getDataRefByColumnIndex"
+			],
+			[
+				"need",
+				"needUpdatedCell"
+			],
+			[
+				"ex",
+				"existingIds"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"owner",
+				"ownerQuery"
+			],
+			[
+				"datepic",
+				"datepicker"
+			],
+			[
+				"margin",
+				"margin-right"
+			],
+			[
+				"plot",
+				"plotOptions"
+			],
+			[
+				"series",
+				"seriesOption"
+			],
+			[
+				"appe",
+				"appendId"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/var/www/application/models/freetds_model.php",
+			"settings":
+			{
+				"buffer_size": 712,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/public/info.php",
+			"settings":
+			{
+				"buffer_size": 293,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/application/controllers/cases.php",
+			"settings":
+			{
+				"buffer_size": 28193,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/application/models/cases_model.php",
+			"settings":
+			{
+				"buffer_size": 35148,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/application/views/templates/footer.php",
+			"settings":
+			{
+				"buffer_size": 3171,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "bootstrap.js",
+			"settings":
+			{
+				"buffer_size": 58458,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/application/views/templates/header.php",
+			"settings":
+			{
+				"buffer_size": 4303,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/application/views/cases/report.php",
+			"settings":
+			{
+				"buffer_size": 5642,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/public/css/bootstrap-cerulean.css",
+			"settings":
+			{
+				"buffer_size": 114045,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/public/css/charisma-app.css",
+			"settings":
+			{
+				"buffer_size": 32488,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "charisma.js",
+			"settings":
+			{
+				"buffer_size": 43091,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "TechSupport.js",
+			"settings":
+			{
+				"buffer_size": 66814,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/application/views/monitoring/configuration.php",
+			"settings":
+			{
+				"buffer_size": 2266,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/var/www/application/controllers/monitoring.php",
+			"settings":
+			{
+				"buffer_size": 10671,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/var/www/public/js/TechSupport.js",
+		"/var/www/log",
+		"/var/www/public/js/bootstrap-datepicker.js",
+		"/var/www/application/views/cases/lists.php",
+		"/var/www/public/css/timelinexml.sleek.css",
+		"/var/www/public/js/charisma.js",
+		"/var/www/public/css/bootstrap-datepicker.css",
+		"/var/www/application/models/monitoring_model.php",
+		"/var/www/application/controllers/monitoring.php",
+		"/var/www/application/views/monitoring/configuration.php",
+		"/var/www/application/views/monitoring/eventDetail.php",
+		"/var/www/public/js/monitoring.js",
+		"/var/www/public/css/charisma-app.css",
+		"/var/www/public/css/bootstrap-cerulean.css",
+		"/var/www/public/js/bootstrap-collapse.js",
+		"/var/www/public/js/bootstrap.js",
+		"/var/www/public/js/bootstrap-toggle.js",
+		"/var/www/public/js/jquery-1.7.2.min.js",
+		"/var/www/application/views/templates/header.php",
+		"/var/www/public/js/bootstrap-popover.js",
+		"/var/www/public/js/bootstrap-tooltip.js",
+		"/var/www/public/js/bootstrap-tab.js",
+		"/var/www/public/js/bootstrap-transition.js",
+		"/var/www/public/js/bootstrap-modal.js",
+		"/var/www/public/js/bootstrap-button.js",
+		"/var/www/application/config/constants.php",
+		"/etc/freetds/freetds.conf",
+		"/etc/odbc.ini",
+		"/etc/odbcinst.ini",
+		"/var/www/wget.log",
+		"/usr/share/freetds/freetds.conf",
+		"/usr/lib/i386-linux-gnu/odbc/libtdsodbc.so",
+		"/etc/apache2/httpd.conf",
+		"/etc/apache2/apache2.conf",
+		"/var/www/wget1.log",
+		"/home/wjh000123/test",
+		"/var/www/public/info.php",
+		"/etc/pear/pear.conf",
+		"/var/www/application/controllers/cases.php",
+		"/var/www/application/views/monitoring/index.php",
+		"/var/www/application/views/cases/salesforce.php",
+		"/var/www/application/views/cases/report.php",
+		"/var/www/application/models/cases_model.php",
+		"/var/www/application/views/templates/footer.php",
+		"/var/www/public/css/fullcalendar.css",
+		"/var/www/application/models/freetds_model.php",
+		"/dev/null",
+		"/var/www/application/controllers/configure.php",
+		"/var/www/application/models/configure_model.php",
+		"/var/www/application/views/cases/templates/share.php",
+		"/var/www/application/views/cases/configuration.php",
+		"/home/wjh000123/lists",
+		"/var/www/application/views/cases/index.php",
+		"/var/www/application/views/monitoring/templates/footer.php",
+		"/var/www/public/css/bootstrap-timepicker.css",
+		"/var/www/application/models/salesforce_model.php",
+		"/var/www/application/nusoapclient/salesforce.php",
+		"/var/www/public/js/timelinexml.js",
+		"/usr/share/doc/freetds-common/examples/freetds.conf",
+		"/etc/php5/apache2/php.ini",
+		"/var/www/application/nusoapclient/nusoap.php",
+		"/var/www/application/libraries/adldap.php",
+		"/var/www/application/controllers/auth.php",
+		"/var/www/public/js/highcharts-more.js",
+		"/var/www/application/libraries/classes/adLDAPGroups.php",
+		"/var/www/application/libraries/classes/adLDAPUsers.php",
+		"/var/www/application/libraries/classes/adLDAPFolders.php",
+		"/var/www/application/libraries/classes/adLDAPUtils.php",
+		"/var/www/application/libraries/classes/adLDAPContacts.php",
+		"/var/www/application/libraries/classes/adLDAPComputers.php",
+		"/var/www/application/libraries/classes/adLDAPExchange.php",
+		"/var/www/adLDAP.php",
+		"/var/www/info.php",
+		"/var/www/application/config/authldap.php",
+		"/var/www/application/libraries/authldap.php",
+		"/etc/php5/cli/php.ini",
+		"/var/www/public/js/highstock.js",
+		"/var/www/public/js/timelinexml.min.js",
+		"/var/www/public/js/jquery.dataTables.min.js",
+		"/var/www/public/js/jquery.dataTables.js",
+		"/var/www/public/.htaccess",
+		"/var/www/public/index.php",
+		"/var/www/application/views/demo/form.php",
+		"/var/www/History/2013.7.16/application/controllers/cases.php",
+		"/var/www/application/soapclient/SforceBaseClient.php",
+		"/home/wjh000123/桌面/navicat110_premium_en/start_navicat",
+		"/var/www/application/views/dashboard/index.php",
+		"/var/www/application/views/cases/manage.php",
+		"/var/www/History/2013.7.16/application/models/salesforce_model.php",
+		"/home/wjh000123/桌面/SqlScript/TechSupport_7_8_1.sql",
+		"/var/www/public/test/samples/wsdlclient3.php",
+		"/var/www/application/soapclient/SforceEnterpriseClient.php",
+		"/var/www/application/soapclient/SforceHeaderOptions.php",
+		"/var/www/application/soapclient/PEAR.php",
+		"/var/www/application/soapclient/ProxySettings.php",
+		"/var/www/application/soapclient/SforceEmail.php",
+		"/var/www/public/js/Highcharts/highstock.js",
+		"/var/www/application/controllers/members.php",
+		"/var/www/application/models/members_model.php",
+		"/var/www/public/css/jquery-ui-1.8.21.custom.css",
+		"/var/www/application/soapclient/enterprise.wsdl.xml",
+		"/var/www/application/controllers/dashboard.php",
+		"/var/www/public/css/noty_theme_default.css",
+		"/var/www/application/views/demo/ui.php",
+		"/var/www/public/css/jquery.noty.css",
+		"/var/lib/mysql/mysql/proc.MYD",
+		"/var/www/application/views/demo/calendar.php",
+		"/var/www/public/js/highcharts.js",
+		"/var/www/public/js/jquery.raty.min.js"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/var/www/application",
+			"/var/www",
+			"/var/www/application",
+			"/var/www"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"td",
+			"setDataTable",
+			"callForCaseOverview",
+			"datatable",
+			"refreshDataTable",
+			"callForCaseOverview",
+			"refreshDataTable",
+			"callForCaseOverview",
+			"setDataTable",
+			"->",
+			"{}",
+			"object",
+			"JSON.parse",
+			"JSON",
+			"$.each",
+			"setDataTable",
+			"datatable",
+			"postData",
+			"duration",
+			"sendNotification",
+			"duration-criteria",
+			"setdateSelector",
+			"dateSelector",
+			"setStartDate",
+			"$('.durationStartDate')",
+			"#dateSelector",
+			"dateSelector",
+			"startdate",
+			"popup",
+			"emergencyStartDate",
+			"setDateSelector",
+			"datepic",
+			"time",
+			"dateSelector",
+			"z-index",
+			"dropdown-menu",
+			"disabled",
+			"YYYY-MM-DD",
+			"$(val)",
+			"fromNow",
+			"timeago",
+			"sendNotification",
+			"//",
+			"getMonitoringLog",
+			"addMonitoringLog",
+			"#accordion",
+			"=\"#accordion",
+			"#accordion",
+			"ease",
+			"collapse",
+			"overflow",
+			"pure",
+			"label",
+			"hover",
+			"edit-case",
+			"getEvent",
+			"getList",
+			"callForEmergencyCaseReportByYear",
+			"fetchEmergencyCase",
+			"viewEmergencyCaseList",
+			"successful",
+			"'successful'",
+			"checkServer",
+			"freetds_model",
+			"executeMSSQLScript",
+			"message",
+			"sendNotification",
+			"\"",
+			"sendNotification",
+			"Active",
+			"family",
+			"Calibri",
+			"updateMonitoringEventModal",
+			"callForEditEvent",
+			"saveMonitoring",
+			"update",
+			"saveMonitoring",
+			"callForEditEvent",
+			"saveMonitoring",
+			"callForEditEvent",
+			"async",
+			"$(this)",
+			"setSFDataTable",
+			"Table",
+			"*",
+			"'",
+			"saveMonitoring",
+			"$.data",
+			"data",
+			"data(",
+			"externalServer",
+			"local_to_gmt",
+			"sendNotification",
+			"mail",
+			"pear",
+			"local_to_gmt",
+			"data-content",
+			"monitoring",
+			" $",
+			"=",
+			"insert",
+			"isValid",
+			"monitory",
+			"case",
+			"DrawDailyCaseChart",
+			"TotalSerie",
+			"Serie",
+			"DrawWeeklyCaseChart",
+			"AAA",
+			"00ff00",
+			"'r'",
+			"r",
+			"fff",
+			"holiday[i]",
+			"holiday[i].",
+			"holiday[i]",
+			"dayoff",
+			"date",
+			"in",
+			"dayoff",
+			"holiday",
+			"weekNum",
+			"DrawWeeklyCaseChart",
+			"viewDailySystemUnitAmountOverview",
+			"getMonthlyCases",
+			"viewDailySystemUnitAmountOverview",
+			"DrawWeeklyCaseChart",
+			"viewByYear"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"emergencyReason",
+			"showEmergencyPopup",
+			"2013",
+			"appenders",
+			"appenderList",
+			"appendIdList",
+			"dataList",
+			"setChildSelectValue",
+			"SFRootUrl",
+			"\"NULL\"",
+			"$insertArray",
+			"",
+			"switchToDetailReport",
+			"switchToDetail"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/var/www/application/models/freetds_model.php",
+					"settings":
+					{
+						"buffer_size": 712,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								426,
+								426
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/var/www/public/info.php",
+					"settings":
+					{
+						"buffer_size": 293,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								265,
+								265
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/var/www/application/controllers/cases.php",
+					"settings":
+					{
+						"buffer_size": 28193,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								17814,
+								17814
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 9712.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/var/www/application/models/cases_model.php",
+					"settings":
+					{
+						"buffer_size": 35148,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								29763,
+								29763
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 13403.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/var/www/application/views/templates/footer.php",
+					"settings":
+					{
+						"buffer_size": 3171,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2078,
+								2078
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 714.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "bootstrap.js",
+					"settings":
+					{
+						"buffer_size": 58458,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18599,
+								18599
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 10698.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/var/www/application/views/templates/header.php",
+					"settings":
+					{
+						"buffer_size": 4303,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1188,
+								1188
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/var/www/application/views/cases/report.php",
+					"settings":
+					{
+						"buffer_size": 5642,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2820,
+								2820
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 758.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/var/www/public/css/bootstrap-cerulean.css",
+					"settings":
+					{
+						"buffer_size": 114045,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15577,
+								15577
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 14914.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/var/www/public/css/charisma-app.css",
+					"settings":
+					{
+						"buffer_size": 32488,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								32403,
+								32403
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 27682.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "charisma.js",
+					"settings":
+					{
+						"buffer_size": 43091,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								33703,
+								33703
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 17372.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "TechSupport.js",
+					"settings":
+					{
+						"buffer_size": 66814,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								36034,
+								36034
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 22513.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/var/www/application/views/monitoring/configuration.php",
+					"settings":
+					{
+						"buffer_size": 2266,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								738,
+								738
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "/var/www/application/controllers/monitoring.php",
+					"settings":
+					{
+						"buffer_size": 10671,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6883,
+								6883
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3167.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 229.0,
+	"status_bar_visible": true
+}

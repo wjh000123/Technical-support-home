@@ -1,0 +1,18 @@
+.valueLabels {
+	font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+	font-size:70%;
+	color:blue;
+}
+div.valueLabelLight {
+	font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+	opacity:0.5;
+	background-color: white;
+	border:none;
+	position:absolute;
+}
+div.valueLabel {
+	font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+	position:absolute;
+	border:none;
+}
+

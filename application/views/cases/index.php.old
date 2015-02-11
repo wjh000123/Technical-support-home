@@ -1,0 +1,187 @@
+<div>
+	<ul class="breadcrumb">
+		<li>
+			<a href="/">Home</a> <span class="divider">/</span>
+		</li>
+		<li>
+			<a href="#">Cases</a>
+		</li>
+	</ul>
+
+<div class="row-fluid">
+	<a data-rel="tooltip" class="well span3 top-block" href="/cases/salesforce" data-original-title="loading" id="TotalCaseNotification">
+		<span class="icon32 icon-color icon-refresh" title=""></span>
+		<div>Total Cases</div>
+		<div class="value">0</div>
+		<span class="notification red">0</span>
+	</a>
+
+	<a data-rel="tooltip" class="well span3 top-block" href="#" data-original-title="6 new members." style="position: relative;">
+		<span class="icon32 icon-red icon-user"></span>
+		<div>Total Members</div>
+		<div>507</div>
+		<span class="notification">6</span>
+	</a>
+
+	<a data-rel="tooltip" class="well span3 top-block" href="#" data-original-title="$34 new sales.">
+		<span class="icon32 icon-color icon-cart"></span>
+		<div>Sales</div>
+		<div>$13320</div>
+		<span class="notification yellow">$34</span>
+	</a>
+	
+	<a data-rel="tooltip" class="well span3 top-block" href="#" data-original-title="12 new messages.">
+		<span class="icon32 icon-color icon-envelope-closed"></span>
+		<div>Messages</div>
+		<div>25</div>
+		<span class="notification red">12</span>
+	</a>
+</div>
+
+<div class="row-fluid">
+	<div class="box">
+		<div class="box-header well">
+			<h2><i class="icon-list-alt"></i> Monthly Report - English Center</h2>
+			<div class="box-icon">
+				<a href="#" class="btn btn-round" id="CaseAdd"><i class="icon-plus"></i></a>
+				<a href="#" class="btn btn-round" id="CaseList"><i class="icon-list"></i></a>
+				<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+				<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+			</div>
+		</div>
+		<div class = "box-content" style = "overflow:hidden;">
+			<div style="text-align: center;">
+				<div id="chartReminder" style="display: inline-block;margin-bottom: 10px;">
+					
+				</div>
+			</div>
+			<div name="TimeSelector" style="margin-bottom:5px;text-align: right;">
+				<div class="btn-toolbar" style="margin: 0;">
+	              <div class="btn-group">
+	                <button class="btn">2012</button>
+	                <button class="btn active">2013</button>
+	                <button class="btn">2014</button>
+	                <button class="btn">2015</button>
+	              </div>
+	            </div>
+			</div>
+			<div id="HCmonthlyReport" class="center" style = "overflow:hidden;border-bottom:1px solid #BBB;"><div id="loading" class="center">Loading...<div class="center"></div></div></div>
+			<div id = "SystemUnit" style = "float: left;width: 49%;"></div>
+			<div id = "CaseType" style = "float: left; width: 49%;"></div>
+		</div>
+	</div>
+</div>
+
+<div class="modal hide fade" id="CaseDataModal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3>Data List</h3>
+	</div>
+	<div class="modal-body">
+		<table class="table table-bordered table-striped table-condensed datatable" id="CaseDataTable" style="min-width:850px;">
+			<thead>
+			  <tr>
+				  <th>System Unit</th>
+				  <th>Function Unit</th>
+				  <th>Case Type</th>
+				  <th>Amount</th>
+			  </tr>
+			</thead>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+		<a href="#" class="btn btn-primary">Save changes</a>
+	</div>
+</div>
+
+<div class="modal hide fade" id="CaseAddModal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3>Add Case</h3>
+	</div>
+	<div class="modal-static-body">
+		<table class="table table-bordered table-striped" id="CaseAddTable" style="vertical-align:middle;">
+			<tr>
+				<td style="text-align:right;vertical-align:middle;">
+					<h4>Function Unit</h4>
+				</td>
+				<td>
+					<select id="selectSystemUnit" data-rel="chosen">
+					</select>
+					 - 
+					<select id="selectFunctionUnit" data-rel="chosen">
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:right;vertical-align:middle;">
+					<h4>Case Type</h4>
+				</td>
+				<td>
+					<select id="selectCaseType" data-rel="chosen">
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:right;vertical-align:middle;">
+					<h4>Case Date</h4>
+				</td>
+				<td>
+					<div class="input-append">
+						<input type="text" class="datepicker" id="casedate" style="cursor:pointer;width:190px;"><span class="add-on"><i class="icon-calendar"></i></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:right;">
+					<h4>Amount</h4>
+				</td>
+				<td>
+					<div style="width:10%;"><input type="text" id="caseAmount" style="border: 0; font-weight: bold;" value="1"/></div>
+					<div class="slider" style="width:220px;"></div>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:right;vertical-align:middle;">
+					<h4>Description</h4>
+				</td>
+				<td>
+					<textarea class="autogrow" style = "width:460px;height:70px;"></textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+		<a href="#" class="btn btn-primary" data-loading-text="Saving..." id="saveCaseAdd">Save</a>
+		<a href="#" class="btn btn-info" data-loading-text="Saving..." id="savenewCaseAdd">Save & New</a>
+	</div>
+</div>
+
+<!--
+<div class="row-fluid sortable">
+	<div class="box">
+		<div class="box-header well">
+						<h2><i class="icon-list-alt"></i> Monthly Report</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+		<div class = "box-content">
+			<div name="TimeSelector" style="margin-bottom:5px;text-align: right;">
+				<div class="btn-toolbar" style="margin: 0;">
+	              <div class="btn-group">
+	                <button class="btn">2012</button>
+	                <button class="btn active">2013</button>
+	                <button class="btn">2014</button>
+	                <button class="btn">2015</button>
+	              </div>
+	            </div>
+			</div>
+			<div id="-monthlyReport" class="center" style="height:300px;"><div style="text-align: center;">Loading...</div></div>
+		</div>
+	</div>
+</div>
+-->

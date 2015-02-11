@@ -1,0 +1,11 @@
+name: codeigniter
+version: 3
+handle:
+- rewrite: if(!is_dir() && !is_file() && path~"/") goto "/index.php/%{QUERY_STRING}"
+- compress:  if ( out_header["Content-type"]=="text/css" ) compress
+- compress:  if ( out_header["Content-type"]=="text/javascript" ) compress
+- compress:  if ( out_header["Content-type"]=="application/javascript" ) compress
+- compress:  if ( out_header["Content-type"] ~ "image/jpeg" ) compress
+- compress:  if ( out_header["Content-type"] ~ "image/pjpeg" ) compress
+- compress:  if ( out_header["Content-type"] ~ "image/gif" ) compress
+- compress:  if ( out_header["Content-type"] ~ "image/bmp" ) compress

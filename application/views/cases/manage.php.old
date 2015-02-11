@@ -1,0 +1,42 @@
+<div>
+	<ul class="breadcrumb">
+		<li>
+			<a href="/">Home</a> <span class="divider">/</span>
+		</li>
+		<li>
+			<a href="/cases">Cases</a> <span class="divider">/</span>
+		</li>
+		<li>
+			<a href="#">Manage</a>
+		</li>
+	</ul>
+</div>
+<?php
+echo $test;
+?>
+<div class="row-fluid">
+	<div class="box">
+		<div class="box-header well">
+						<h2><i class="icon-list-alt"></i> Case Overview - Salesforce</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-round" id="CaseAdd"><i class="icon-plus"></i></a>
+							<a href="#" class="btn btn-round" id="CaseData"><i class="icon-th-list"></i></a>
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+		<div class = "box-content" style = "overflow:hidden;">
+			<table class="table table-bordered table-striped table-condensed datatable" style="min-width:850px;">
+			<thead>
+			  <tr>
+				  <th>Case Number</th>
+				  <th>Created By</th>
+				  <th>Created Date</th>
+				  <th>Owner</th>
+				  <th>Status</th>
+			  </tr>
+			</thead>
+		</table>
+		</div>
+	</div>
+</div>

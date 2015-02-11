@@ -1,0 +1,911 @@
+var today = new Date();
+var DEFAULTYEAR = today.getFullYear();
+var DEFAULTMONTH = today.getMonth();
+var currentYear = DEFAULTYEAR;
+var currentMonth = DEFAULTMONTH;
+var selectedDate = today;
+var Months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+var SystemFunctionMapper;
+
+function tsDocReady()
+{
+
+	callForCaseReport();
+	refreshSFDataTable('#SFCaseDataTable');
+
+	setDateSelector();
+
+    var picker = $('#dateSelector').datepicker({
+    	format: 'yyyy-mm-dd',
+    	autoclose: true,
+    	minViewMode: 'months'
+    }).on('changeDate', function(ev){
+		var date = new Date(ev.date.valueOf());
+		selectedDate = setSelectedDate(date.getFullYear(), date.getMonth()+1, 1);
+		setDateSelector();
+		picker.hide();
+    }).data('datepicker');
+
+    Highcharts.setOptions({
+	    global: {
+	        useUTC: false
+	    }
+	});
+
+	$('#CaseList').click(function(e){
+		e.preventDefault();
+		callForCaseOverview(selectedDate.getFullYear(), selectedDate.getMonth()+1, '#CaseDataTable');
+	});
+
+	$('#viewSFCaseChart').click(function(e){
+		e.preventDefault();
+		callForSFCaseAmountOverview();
+	});
+
+	$('#CaseAdd').click(function(e){
+		e.preventDefault();
+		callForCaseFilter();
+	});
+
+	$('#saveCaseAdd').click(function(e){
+		e.preventDefault();
+		$(this).button('loading');
+		$('#savenewCaseAdd').button('loading');
+		callForAddCase();
+	});
+
+	$('#savenewCaseAdd').click(function(e){
+		e.preventDefault();
+		$(this).button('loading');
+		$('#saveCaseAdd').button('loading');
+		callForAddCase(true);
+	});
+
+	$('#selectSystemUnit').change(function(e){
+		setFunctionUnit($('#selectSystemUnit option:selected').text(), SystemFunctionMapper);
+	});
+
+	$("#caseAmount").val($('.slider').slider("value"));
+
+	$('.modal').on('show', function () {
+	  $(this).css({
+	  	'margin-top':($(window).height()-$(this).height())/2, 
+	  	'margin-left':($(window).width()-$(this).width())/2,
+	  	'top':'0', 
+	  	'left':'0'
+	  });
+	})
+
+	$('#iconRefresh').click(function(e){
+		e.preventDefault();
+		refreshDataTable('#CaseDataTable');
+	});
+
+	$('#iconSFRefresh').click(function(e){
+		e.preventDefault();
+		refreshSFDataTable('#SFCaseDataTable');
+	});
+
+	$('#iconSFSync').click(function(e){
+		e.preventDefault();
+		callForSyncSFCase(selectedDate.getFullYear(), selectedDate.getMonth()+1);
+	});
+
+	callForTotalCaseAmount('#TotalCaseNotification');
+	callForTotalCaseAmount('#iconSFSync');
+	$('#TotalCaseNotification .icon-refresh').click(function(e)
+	{
+		callForTotalCaseAmount('#TotalCaseNotification');
+	});
+}
+
+var previousPoint;
+function highCharts(data)
+{
+	var ChartsTitle = '<b>'+selectedDate.getFullYear()+' Cases</b>';
+	var ChartsSubTitle = 'Jan ~ Dec';
+	var hCharts = $('#HCmonthlyReport').highcharts({
+        chart: {
+            type: 'column',
+            height: 420
+        },
+        title: {
+            text: ChartsTitle
+        },
+        subtitle: {
+        	text: ChartsSubTitle
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {month: '%b'}
+        },
+        tooltip: {
+            //xDateFormat: '%Y-%m-%d'
+            formatter: function(){
+        		return Highcharts.dateFormat('%B, %Y', this.x)+': <b>'+this.point.y+'</b><br><br><br>Click for more.';
+        	}
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    x: 4,
+                    y: 10,
+                    style: {
+                        fontSize: '14px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                },
+	        	cursor: 'pointer',
+	            events: {
+	                click: function(event) {
+	                	if(previousPoint)
+	                		previousPoint.update({color: Highcharts.getOptions().colors[0]});
+	                	previousPoint = event.point;
+	                	event.point.update({color: 'rgba(38, 60, 83, 0.7)'});
+	                    switchToDetailReport(selectedDate.getFullYear(), new Date(event.point.x).getMonth()+1);
+	                }
+	            }
+            }
+        },
+        yAxis: {
+            title: {
+                text: '# Cases'
+            }
+        },
+        series: [{
+        	data: data,
+        	name: selectedDate.getFullYear()+' # Total'
+    	}]
+    })
+    .highcharts();
+}
+
+function callForCaseReport()
+{
+	if($("#HCmonthlyReport").length)
+	{
+		$.ajax({
+			url:"/cases/viewByYear/"+selectedDate.getFullYear(),
+			success:function(data){
+				highCharts(JSON.parse(data));
+			}
+		});
+	}
+}
+
+function switchToDetailReport(year, month)
+{
+	selectedDate = setSelectedDate(year, month);
+
+	callForReportData(year, month);
+}
+
+var requestResults;
+var appendIds;
+var names;
+function callForReportData(year, month)
+{
+	requestResults = [];
+	appendIds = [];
+	names = [];
+	callForCaseSystemUnit(year, month);
+}
+
+function callForCaseSystemUnit(year, month)
+{
+	$.ajax({
+		url:"/cases/viewSystemUnit/"+year+"/"+month,
+		success:function(data){
+			result = (JSON.parse(data)).concat();
+			requestResults.push(result);
+			appendIds.push('SystemUnit');
+			names.push('System Unit');
+            $('#SystemUnit').html('<div id="loading" class="center">Loading...<div class="center"></div></div>');
+			$('#CaseType').html('<div id="loading" class="center">Loading...<div class="center"></div></div>');
+
+			callForCaseFunctionUnit(year, month);
+		}
+	});
+}
+
+function callForCaseFunctionUnit(year, month)
+{
+	$.ajax({
+		url:"/cases/viewFunctionUnit/"+year+"/"+month,
+		success:function(data){
+			result = (JSON.parse(data)).concat();
+			requestResults.push(result);
+			appendIds.push('SystemUnit');
+			names.push('Function Unit');
+
+			callForCaseType(year, month);
+		}
+	});
+}
+
+function callForCaseType(year, month)
+{
+	$.ajax({
+		url:"/cases/viewCaseType/"+year+"/"+month,
+		success:function(data){
+			result = (JSON.parse(data)).concat();
+			requestResults.push(result);
+			appendIds.push('CaseType');
+			names.push('Case Type');
+
+			drawDetailCharts(requestResults, appendIds, names);
+		}
+	});
+}
+
+function callForCaseOverview(year, month, appender)
+{
+	var result = [];
+
+	if(appender.length)
+	{
+		$.ajax({
+			url:"/cases/viewCaseOverview/"+year+"/"+month,
+			success:function(data){
+				result = (JSON.parse(data)).concat();
+				setDataTable(appender, result);
+				finishRefresh('#iconRefresh', 'icon-refresh');
+			}
+		});
+	}
+}
+
+function callForSFCaseListOverview(year, month, appender, startFromSync)
+{
+	var result = [];
+	if(appender.length)
+	{
+		$.ajax({
+			url:"/cases/viewSFCaseOverview/"+year+"/"+month,
+			success:function(data){
+				result = (JSON.parse(data)).concat();
+				setSFDataTable(appender, result);
+				if(startFromSync)
+				{
+					syncStatus = 1;
+					n.setText('Done.');
+					n.setTimeout(500);
+					finishRefresh('#iconSFSync', 'icon icon-darkgray icon-refresh');
+					finishRefresh('#iconSFRefresh', 'icon-refresh');
+				}
+				else
+					finishRefresh('#iconSFRefresh', 'icon-refresh');
+			}
+		});
+	}
+}
+
+function callForSFCaseAmountOverview()
+{
+	$.ajax({
+		url:"/cases/viewSFCaseAmountOverview",
+		success:function(data){
+			result = (JSON.parse(data)).concat();
+			adjustChartData(result);
+			$('#SFCaseChartModal .modal-body').highcharts('StockChart', {
+				chart: {
+			        alignTicks: false
+			    },
+				rangeSelector : {
+					selected : 1
+				},
+				title : {
+					text : 'Salesforce Case# Overview'
+				},
+				series : [{
+		        	type: 'column',
+					name : 'Case#',
+					data : newData
+				}]
+			});
+			$('#SFCaseChartModal').modal('show');
+		}
+	});
+}
+
+function callForCaseFilter()
+{
+	var result = [];
+
+	$.ajax({
+		url:"/cases/getCaseFilter",
+		success:function(data){
+			result = (JSON.parse(data));
+			SystemFunctionMapper = result['FunctionUnit'];
+			setCaseFilter(result);
+		}
+	});
+}
+
+function callForTotalCaseAmount(selector)
+{
+	if($(selector).length)
+	{
+		$.ajax({
+			url:"/cases/getTotalAmount",
+			success:function(data){
+				result = (JSON.parse(data));
+				updateNotification(selector, result);
+			}
+		});
+	}
+}
+
+function callForAddCase(needNew)
+{
+	var d = $('#casedate').val();
+	var ctid = $('#selectCaseType').val();
+	var fuid = $('#selectFunctionUnit').val();
+	var a = $('#caseAmount').val();
+
+	$.ajax({
+		url:"/cases/AddCaseReport/"+d+"/"+ctid+"/"+fuid+"/"+a,
+		success:function(data){
+			if(data)
+			{
+				$('#saveCaseAdd').button('reset');
+				$('#savenewCaseAdd').button('reset');
+				if(!needNew)
+				{
+					$('#CaseAddModal').modal('hide');
+					finishCaseAdd();
+				}
+			}
+		}
+	});
+}
+
+var n;
+var syncStatus=-1;
+function callForSyncSFCase(year, month)
+{
+	$.ajax({
+		url:"/cases/SyncCaseFromSalesforce/"+year+"/"+month,
+		success:function(data){
+			if(data)
+			{
+				syncStatus = 0;
+				refreshSFDataTable('#SFCaseDataTable', true);
+				callForTotalCaseAmount('#iconSFSync');
+			}
+		},
+		beforeSend:function(){
+			datatable = $('#SFCaseDataTable').dataTable();
+			datatable.fnClearTable();
+			startRefresh('#iconSFSync');
+			startRefresh('#iconSFRefresh');
+
+			syncStatus=-1;
+			$.noty.closeAll();
+			n = $('#chartReminder').noty({
+				layout: 'inline',
+				type: 'information',
+				template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
+				timeout: false,
+				text: "Syncing data from Salesforce...", 
+				callback: {
+				    onClose: function() {
+				    	if(syncStatus<=0)
+				    		return false;
+				    },
+				},
+			});
+		}
+	});
+}
+
+function setDataTable(selector, data)
+{
+	datatable = $(selector).dataTable();
+	datatable.fnClearTable();
+    datatable.fnAddData(data);
+	datatable.fnSortNeutral();
+	$('#CaseDataModal').modal('show');
+
+    setDateSelector();
+}
+
+function setSFDataTable(selector, data)
+{
+	datatable = $(selector).dataTable();
+	datatable.fnClearTable();
+    datatable.fnAddData(data);
+	datatable.fnSortNeutral();
+
+    setDateSelector();
+}
+
+function updateNotification(selector, data)
+{
+	$(selector+' .value').html(data[0]);
+	$(selector+' .icon32').attr('title', 'last sync at: '+data[1]);
+	$(selector+' .icon').attr('title', 'last sync at: '+data[1]);
+	$(selector+' .icon-refreshing').attr('title', 'last sync at: '+data[1]);
+	$(selector+' span.notification').html(data[2]);
+	$(selector).attr('data-original-title', data[2]+' unclosed cases.');
+}
+
+function drawDetailCharts(data, appendId, name)
+{
+	var chart;
+	var seriesOption;
+	var options = [];
+	var chartSize = '80%';
+	var innerSize = '0%';
+	var showLegend = true;
+	var labelDistance = 30;
+	var labelColor = '#000000';
+	//var colors = ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];
+	var colors = Highcharts.getOptions().colors;
+	var customData = [];
+	var systemUnitQueue = [];
+
+	for(i in data)
+	{
+		switch(name[i])
+		{
+			case 'Function Unit':
+				chartSize = '75%';
+				innerSize = '60%';
+				showLegend = false;
+				labelDistance = 15;
+				labelColor = '#000000';
+				for(j in systemUnitQueue)
+				{
+					for(k in data[i])
+						if(data[i][k][0]==systemUnitQueue[j])
+							customData.push({
+								name: data[i][k][1],
+								y: data[i][k][2],
+								color: colors[parseInt(j)]
+							});
+				}
+				break;
+			case 'System Unit':
+				chartSize = '60%';
+				innerSize = '0%';
+				showLegend = true;
+				labelDistance = -45;
+				labelColor = '#ffffff';
+				for(j in data[i])
+				{
+					systemUnitQueue.push(data[i][j][0]);
+					customData.push({
+						name: data[i][j][0],
+						y: data[i][j][1],
+						color: colors[parseInt(j)]
+					});
+				}
+				break;
+			default:
+				chartSize = '75%';
+				innerSize = '0%';
+				showLegend = true;
+				labelDistance = 15;
+				labelColor = '#000000';
+				for(j in data[i])
+				{
+					customData.push({
+						name: data[i][j][0],
+						y: data[i][j][1]
+					});
+				}
+		}
+
+		seriesOption = {
+			id: name[i],
+        	showInLegend: showLegend,
+        	size: chartSize,
+        	innerSize: innerSize,
+        	data: customData,
+        	name: name[i],
+            cursor: 'pointer',
+            allowPointSelect: true,
+            slicedOffset: 0,
+            point:{
+    			events: {
+    				legendItemClick: function(e){
+    					return false;
+    				}
+    			}
+    		},
+            dataLabels: {
+                        enabled: true,
+                        distance: labelDistance,
+                        connectorColor: '#000000',
+                        style: {color: labelColor},
+                        formatter: function() {
+                        	reStr = ''+ this.point.name +'';
+                        	if(this.series.name != 'System Unit')
+                        		reStr +=': '+ Highcharts.numberFormat(this.point.percentage,1) +'%';
+                        	else
+                        		reStr += '<br><b>'+Highcharts.numberFormat(this.point.percentage,1) +'%</b>';
+                        	reStr = this.percentage > 1.5 ? reStr : null;
+                            return reStr;
+                        }
+            }
+    	};
+    	options.push(seriesOption);
+		customData = [];
+    	if(name[i]=='System Unit')
+    		continue;
+
+		chart = new Highcharts.Chart({
+	        chart: {
+	            type: 'pie',
+	            height: 420,
+				renderTo: appendId[i],
+				animation: {
+		            duration: 500
+	        	}
+	        },
+	        legend: {
+	            layout: 'vertical',
+	            itemStyle: {
+			        fontSize: '10px'
+			    },
+	            align: 'right',
+	            verticalAlign: 'top',
+	            floating: true,
+	            labelFormatter: function() {
+                	return this.name +': '+this.y;
+            	}
+	        },
+	        loading: {
+	            labelStyle: {
+	                color: 'black'
+	            },
+	            showDuration: 500,
+	            hideDuration: 500
+        	},
+	        title: {
+	            text: '<b>'+name[i]+'</b>'
+	        },
+	        subtitle:{
+	        	text: Months[selectedDate.getMonth()]+', '+selectedDate.getFullYear(),
+	        	style: {
+	        		fontSize: '10px'
+	        	}
+	        },
+	        tooltip: {
+	            //xDateFormat: '%Y-%m-%d'
+	            formatter: function(){
+	        		return this.point.name+' #: <b>'+this.point.y+'</b><br>Percentage: <b>'+Highcharts.numberFormat(this.point.percentage,1)+'%</b>';
+	        	}
+	        },
+	        series: options
+	    });
+
+		//if no data
+		if(data[i].length==0)
+		{
+			chart.hideLoading();
+			chart.showLoading("No Data Available");
+			chart.setSize(chart.width, 100);
+		}
+
+		chart.render();
+		options = [];
+		//data = {};
+	}
+	
+	/*
+	chart = new Highcharts.Chart({
+        chart: {
+            type: 'pie',
+            height: 420,
+			renderTo: 'SystemUnit',
+			animation: {
+	            duration: 1000
+        	}
+        },
+        title: {
+            text: '<b>'+selectedDate.getFullYear()+', '+Months[selectedDate.getMonth()]+' - System Unit</b>'
+        },
+        tooltip: {
+            //xDateFormat: '%Y-%m-%d'
+            formatter: function(){
+        		return this.point.name+': <b>'+this.point.y+'</b>';
+        	}
+        },
+        series: [{
+        	size: '80%',
+        	data: data[0],
+        	name: 'system unit',
+            cursor: 'pointer',
+            allowPointSelect: true,
+            dataLabels: {
+                        enabled: true,
+                        connectorColor: '#000000',
+                        style: {color: '#000000'},
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(1) +' %';
+                        }
+            }
+    	}]
+    });
+	chart.render();
+
+    chart = new Highcharts.Chart({
+        chart: {
+            type: 'pie',
+            height: 420,
+			renderTo: 'CaseCategory',
+			animation: {
+	            duration: 1000
+        	}
+        },
+        title: {
+            text: '<b>'+selectedDate.getFullYear()+', '+Months[selectedDate.getMonth()]+' - Case Category</b>'
+        },
+        tooltip: {
+            //xDateFormat: '%Y-%m-%d'
+            formatter: function(){
+        		return this.point.name+': <b>'+this.point.y+'</b>';
+        	}
+        },
+        series: [{
+        	size: '80%',
+        	data: data[1],
+        	name: 'CaseCategory',
+            cursor: 'pointer',
+            allowPointSelect: true,
+            dataLabels: {
+                        enabled: true,
+                        connectorColor: '#000000',
+                        style: {color: '#000000'},
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(1) +' %';
+                        }
+            }
+    	}]
+    });
+	chart.render();
+    
+	chart.addSeries({
+		data: data[0], 
+		type: 'pie', 
+		name: 'system unit',
+		center: ['30%','45%']
+	});
+
+	chart.addSeries({
+		data: data[1],
+		type: 'pie', 
+		name: 'case category', 
+		center: ['70%','45%']
+    });*/
+}
+
+function setSelectedDate(year, month, day)
+{
+	if(!day)
+		day = 1;
+	return new Date(year+'/'+month+'/'+day);
+}
+
+function setDateSelector()
+{
+	if($('#CaseDataTable').length)
+	{
+		if(!$('.span4:eq(1)').html())
+    		$('.span4:eq(1)').html('<div class="btn-group" style="text-align:center;"><a class="btn" href="#" id="dateSelector" ><i class="icon-calendar"></i>'+Months[selectedDate.getMonth()]+', '+selectedDate.getFullYear()+'</a><a class="btn" href="#" id="iconRefresh" title="Reload"><i class="icon-refresh"></i></a></div>');
+	}
+	else if($('#SFCaseDataTable').length)
+	{
+		if(!$('.span4:eq(1)').html())
+    		$('.span4:eq(1)').html('<div class="btn-group" style="text-align:center;"><a class="btn" href="#" id="dateSelector" ><i class="icon-calendar"></i>'+Months[selectedDate.getMonth()]+', '+selectedDate.getFullYear()+'</a><a class="btn" href="#" id="iconSFSync" title="Sync"><i class="icon icon-darkgray icon-refresh"></i></a><a class="btn" href="#" id="iconSFRefresh" title="Reload"><i class="icon-refresh"></i></a></div>');
+    
+	}
+	$('#dateSelector').html('<i class="icon-calendar"></i>'+Months[selectedDate.getMonth()]+', '+selectedDate.getFullYear());
+}
+
+function setCaseFilter(data)
+{
+	$('#selectSystemUnit').empty();
+	$.each(data['SystemUnit'], function (key, value) {
+    $('#selectSystemUnit').append($('<option>', { 
+        value: key,
+        text : value 
+	    }));
+	});
+	$('#selectSystemUnit').trigger("liszt:updated");
+
+	setFunctionUnit($('#selectSystemUnit option:selected').text(), data['FunctionUnit']);
+
+	$('#selectCaseType').empty();
+	$.each(data['CaseType'], function (key, value) {
+    $('#selectCaseType').append($('<option>', { 
+        value: key,
+        text : value 
+	    }));
+	});
+	$('#selectCaseType').trigger("liszt:updated");
+
+	$('#CaseAddModal').modal('show');
+}
+
+function setFunctionUnit(parentValue, mapper)
+{
+	var needClear = true;
+	$.each(mapper, function (key, value) {
+		if(value[1]==parentValue)
+		{
+			if(needClear)
+			{
+				$('#selectFunctionUnit').empty();
+				needClear = false;
+			}
+			$('#selectFunctionUnit').append($('<option>', { 
+		        value: key,
+		        text : value[0] 
+			}));
+		}
+	});
+	$('#selectFunctionUnit').trigger("liszt:updated");
+}
+
+function refreshDataTable(table)
+{
+	startRefresh('#iconRefresh');
+	callForCaseOverview(selectedDate.getFullYear(), (selectedDate.getMonth()+1), table);
+}
+
+function refreshSFDataTable(table, startFromSync)
+{
+	if(startFromSync)
+	{
+		n.setText('Reloading Data...');
+	}
+	else
+		startRefresh('#iconSFRefresh');
+	callForSFCaseListOverview(selectedDate.getFullYear(), (selectedDate.getMonth()+1), table, startFromSync);
+}
+
+function startRefresh(iconSelector)
+{
+	/*$(datePickerSelector).attr({
+		'disabled': 'disabled'
+	});*/
+
+	$(iconSelector).attr({
+		'disabled': 'disabled'
+	});
+
+
+	$(iconSelector+' i').attr({
+		'class': 'icon-refreshing'
+	});
+}
+
+function finishRefresh(iconSelector, iconClass)
+{
+	//$(datePickerSelector).removeAttr('disabled');
+
+	$(iconSelector).removeAttr('disabled');
+
+	$(iconSelector+' i').attr({
+		'class': iconClass
+	});
+}
+
+function finishCaseAdd()
+{
+	$.noty.closeAll();
+	$('#chartReminder').noty({
+		layout: 'inline',
+		type: 'information',
+		template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div><button type="button" class="close" data-dismiss="alert" style="margin-left:5px;">×</button></div>',
+		timeout: false,
+		text: "You've made changes, please <a id='alertRefresh'>Refresh</a> to view the latest report.",
+	});
+
+	$('#alertRefresh').click(function(e){
+		e.preventDefault();
+		location.reload();
+	});
+}
+
+var newData;
+function adjustChartData(data)
+{
+	newData= [];
+	var dayInWeek;
+	$.each(data, function(index, value){
+		dayInWeek = new Date(value[0]).getDay();
+		if(dayInWeek==6||dayInWeek==0)
+		{
+			var nData={
+				x: value[0],
+				y: value[1],
+	        	color: 'rgb(47,126,116)',
+				marker: {
+					enabled: true,
+					symbol: 'circle',
+					radius: 2,
+					fillColor: "rgb(47,126,116)"
+				}
+			}
+			newData.push(nData);
+		}
+		else
+			newData.push(value);
+
+	});
+}
+
+
+//datatable plugins
+$.fn.dataTableExt.oApi.fnSortNeutral = function ( oSettings ){
+    /* Remove any current sorting */
+    oSettings.aaSorting = [];
+      
+    /* Sort display arrays so we get them in numerical order */
+    oSettings.aiDisplay.sort( function (x,y) {
+        return x-y;
+    } );
+    oSettings.aiDisplayMaster.sort( function (x,y) {
+        return x-y;
+    } );
+      
+    /* Redraw */
+    oSettings.oApi._fnReDraw( oSettings );
+};
+
+$.fn.dataTableExt.oApi.fnFakeRowspan = function ( oSettings, iColumn, bCaseSensitive ) {
+    /* Fail silently on missing/errorenous parameter data. */
+    if (isNaN(iColumn)) {
+        return false;
+    }
+      
+    if (iColumn < 0 || iColumn > oSettings.aoColumns.length-1) {
+        alert ('Invalid column number choosen, must be between 0 and ' + (oSettings.aoColumns.length-1));
+        return false;
+    }
+      
+    var oSettings = oSettings,
+        iColumn = iColumn,
+        bCaseSensitive = (typeof(bCaseSensitive) != 'boolean' ? true : bCaseSensitive);
+  
+    oSettings.aoDrawCallback.push({ "fn": fakeRowspan, "sName": "fnFakeRowspan" });
+  
+    function fakeRowspan () {
+        var firstOccurance = null,
+            value = null,
+            rowspan = 0;
+        jQuery.each(oSettings.aoData, function (i, oData) {
+            var val = oData._aData[iColumn],
+                cell = oData.nTr.childNodes[iColumn];
+            /* Use lowercase comparison if not case-sensitive. */
+            if (!bCaseSensitive) {
+                val = val.toLowerCase();
+            }
+            /* Reset values on new cell data. */
+            if (val != value) {
+                value = val;
+                firstOccurance = cell;
+                rowspan = 0;
+            }
+              
+            if (val == value) {
+                rowspan++;
+            }
+              
+            if (firstOccurance !== null && val == value && rowspan > 1) {
+                oData.nTr.removeChild(cell);
+                firstOccurance.rowSpan = rowspan;
+            }
+        });
+    }
+      
+    return this;
+};
